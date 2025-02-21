@@ -17,10 +17,23 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${IMAGE_NAME} ."
+                sh "podman build -t ${IMAGE_NAME} ."
             }
         }
-
+        stage('Clean Up Image') {
+            steps {
+                script {
+                    try {
+                        sh """
+                            podman rmi $IMAGE_TYPE:latest
+                            podman rmi $PUSH_PATH/$IMAGE_NAME:$ENV
+                        """
+                    } catch (Exception e) {
+                        echo 'Fail to clean up: ' + e
+                    }
+                }
+            }
+        }
         stage('Deploy to Nginx in Pod') {
             steps {
                 // Lấy ID của container Nginx trong pod
