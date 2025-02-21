@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Clone Code') {
             steps {
-                git 'https://github.com/user/repo.git'  // Thay Git repo của bạn
+                git 'https://github.com/khaiminh0401/training-devops.git'  // Thay Git repo của bạn
             }
         }
 
