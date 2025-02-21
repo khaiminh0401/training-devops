@@ -16,9 +16,6 @@ COPY . .
 # Build Angular app (thay đổi nếu cần mode khác)
 RUN npm run build -- --configuration=production
 
-# Stage 2: Run Angular app với Nginx
-FROM nginx AS production-stage
-
 # Copy file build từ stage 1 vào Nginx
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
